@@ -1,20 +1,15 @@
-import { vitePlugin as remix } from "@remix-run/dev";
+import { reactRouter } from "@react-router/dev/vite";
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-
-declare module "@remix-run/server-runtime" {
-  interface Future {
-    unstable_singleFetch: true;
-  }
-}
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  plugins: [
-    remix({
-      future: {
-        unstable_singleFetch: true,
-      },
-    }),
-    tsconfigPaths(),
-  ],
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
+    },
+  },
+  plugins: [reactRouter(), tsconfigPaths(), svgr()],
 });
